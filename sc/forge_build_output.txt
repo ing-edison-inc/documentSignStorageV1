@@ -1,0 +1,77 @@
+No files changed, compilation skipped
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src/DocumentRegistry.sol:37:5
+   |
+37 | /     modifier documentNotExists(bytes32 _hash) {
+38 | |         if (documents[_hash].signer != address(0)) revert DocumentAlreadyExists();
+39 | |         _;
+40 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+37 ~     modifier documentNotExists(bytes32 _hash) {
+38 +         _documentNotExists(_hash);
+39 +         _;
+40 +     }
+41 + 
+42 +     function _documentNotExists(bytes32 _hash) internal {
+43 +         if (documents[_hash].signer != address(0)) revert DocumentAlreadyExists();
+44 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script/Deploy.s.sol:4:8
+  |
+4 | import "forge-std/Script.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unwrapped-modifier-logic]: wrap modifier logic to reduce code size
+  --> src/DocumentRegistry.sol:42:5
+   |
+42 | /     modifier documentExists(bytes32 _hash) {
+43 | |         if (documents[_hash].signer == address(0)) revert DocumentNotFound();
+44 | |         _;
+45 | |     }
+   | |_____^
+   |
+help: wrap modifier logic to reduce code size
+   |
+42 ~     modifier documentExists(bytes32 _hash) {
+43 +         _documentExists(_hash);
+44 +         _;
+45 +     }
+46 + 
+47 +     function _documentExists(bytes32 _hash) internal {
+48 +         if (documents[_hash].signer == address(0)) revert DocumentNotFound();
+49 +     }
+   |
+   = help: https://book.getfoundry.sh/reference/forge/forge-lint#unwrapped-modifier-logic
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> script/Deploy.s.sol:5:8
+  |
+5 | import "../src/DocumentRegistry.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test/DocumentRegistry.t.sol:4:8
+  |
+4 | import "forge-std/Test.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+
+note[unaliased-plain-import]: use named imports '{A, B}' or alias 'import ".." as X'
+ --> test/DocumentRegistry.t.sol:5:8
+  |
+5 | import "../src/DocumentRegistry.sol";
+  |        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = help: https://book.getfoundry.sh/reference/forge/forge-lint#unaliased-plain-import
+

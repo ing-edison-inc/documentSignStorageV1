@@ -1,0 +1,103 @@
+Ya podemos pasar a cualquiera de estas tres líneas de trabajo:
+
+dejar el proyecto más profesional, corrigiendo validaciones, ABI, mensajes de error y estructura;
+probar funciones de consulta/verificación sobre documentos ya registrados;
+prepararlo para testnet y despliegue más realista.
+
+Fase de endurecimiento técnico propuesta
+Fase 1 — Blindaje del smart contract
+
+Objetivo: que la firma sí tenga validez criptográfica.
+
+Cambios que recomiendo
+usar ECDSA de OpenZeppelin
+eliminar confianza ciega en _signer
+validar que la firma recupera realmente la dirección firmante
+usar block.timestamp en el registro
+hacer verifyDocument() tipo view
+no guardar la firma completa en storage salvo que tengas una razón fuerte
+usar custom errors en vez de strings
+Diseño recomendado
+
+Guardar algo así:
+
+struct Document {
+    bytes32 hash;
+    uint256 registeredAt;
+    address signer;
+}
+
+y verificar con:
+
+messageHash = keccak256(abi.encodePacked(_hash))
+ethSignedMessageHash = MessageHashUtils.toEthSignedMessageHash(messageHash)
+ECDSA.recover(...)
+
+Aunque, mejor todavía, para una versión profesional, ir hacia EIP-712 typed data.
+
+Fase 2 — Blindaje del frontend
+
+Objetivo: que el cliente no exponga secretos y que el hook del contrato sea consistente.
+
+Cambios que recomiendo
+reemplazar el falso MetaMaskContext por:
+BrowserProvider(window.ethereum) si usarás MetaMask real
+o renombrarlo a LocalWalletContext si seguirá siendo solo demo local
+quitar NEXT_PUBLIC_MNEMONIC del frontend
+validar envs al arrancar
+corregir ABI de getDocumentInfo
+centralizar errores legibles
+ocultar logs en producción
+no mostrar link a Sepolia cuando estás en 31337
+Fase 3 — Calidad técnica
+
+Objetivo: que el proyecto sea mantenible y presentable.
+
+Cambios que recomiendo
+alinear tests con el contrato
+agregar tests de:
+firma válida
+firma inválida
+hash alterado
+reenvío del mismo documento
+separar contract config, network config, env validation
+generar ABI desde sc/out hacia dapp
+agregar modo local/testnet
+mejorar README técnico
+
+Yo seguiría ahora con una fase de endurecimiento técnico del proyecto, para dejar documentSignStorage listo como dApp seria de portafolio.
+
+Por dónde empezar ya
+
+Yo empezaría por este orden exacto:
+
+Sprint 1
+
+Blindar contrato y contrato-hook
+
+Archivos a intervenir primero:
+
+sc/src/DocumentRegistry.sol
+sc/test/DocumentRegistry.t.sol
+sc/script/Deploy.s.sol
+dapp/hooks/useContract.ts
+Sprint 2
+
+Blindar wallet/provider
+
+Archivos:
+
+dapp/contexts/MetaMaskContext.tsx
+dapp/hooks/useMetaMask.ts
+dapp/components/DocumentSigner.tsx
+dapp/app/page.tsx
+Sprint 3
+
+Pulido final
+
+Archivos:
+
+dapp/utils/hash.ts
+dapp/utils/ethers.ts
+README.md
+.env.example

@@ -1,0 +1,99 @@
+# =====================================================
+# SEGURIDAD - NO SUBIR CLAVES, VARIABLES NI SECRETOS
+# =====================================================
+.env
+.env.*
+!.env.example
+
+**/.env
+**/.env.*
+!**/.env.example
+
+*.key
+*.pem
+*.p12
+*.pfx
+*.crt
+*.cer
+*.keystore
+*.secret
+
+secrets/
+private/
+keys/
+wallets/
+
+# =====================================================
+# ARCHIVOS LOCALES CON POSIBLE INFORMACION SENSIBLE
+# =====================================================
+PkCompany*.txt
+*PRIVATE*.txt
+*Private*.txt
+*private*.txt
+*PK*.txt
+*pk*.txt
+*clave*.txt
+*Clave*.txt
+*password*.txt
+*Password*.txt
+*secret*.txt
+*Secret*.txt
+
+revision_datos_sensibles*.txt
+revision_datos_sensibles*.log
+*_censurado.txt
+
+# =====================================================
+# FOUNDRY / SOLIDITY
+# =====================================================
+cache/
+out/
+broadcast/
+
+**/cache/
+**/out/
+**/broadcast/
+
+*.gas-snapshot
+
+# =====================================================
+# FRONTEND / NODE / NEXT / REACT
+# =====================================================
+node_modules/
+.next/
+dist/
+build/
+coverage/
+
+**/node_modules/
+**/.next/
+**/dist/
+**/build/
+**/coverage/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =====================================================
+# SISTEMA OPERATIVO / EDITORES
+# =====================================================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+.vscode/settings.json
+.vscode/*.log
+.idea/
+
+# =====================================================
+# TEMPORALES
+# =====================================================
+*.tmp
+*.temp
+*.bak
+*.backup
+*.swp
+*.swo
+
