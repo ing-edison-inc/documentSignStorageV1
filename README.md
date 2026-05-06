@@ -1,8 +1,3 @@
-# TAREA A DESARROLLAR
-
-- El estudiante debe de resolver con la IA en proyecto cuando haya visto los videos asociados, haciendo los cambios que considere oportuno.
-
-
 # ETH Database Document - dApp de Verificación de Documentos
 
 ## Descripción del Proyecto
@@ -491,6 +486,9 @@ const { account, isConnected, signMessage } = useMetaMask()
 3. **Manejo de Errores Mejorado**: Mensajes claros y específicos
 4. **10 Wallets Disponibles**: Selector visual de todas las wallets de Anvil
 5. **Hot Reload**: Cambios reflejados instantáneamente en desarrollo
+
+### Desarollado por Ing. Edison Salinas Camacho. Estudiante Academia codecrypto.
+Correo: ing.edison.inc@gmail.com
 
 ---
 
